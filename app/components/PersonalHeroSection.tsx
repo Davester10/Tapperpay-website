@@ -20,7 +20,7 @@ export function PersonalHeroSection() {
   };
 
   return (
-    <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden bg-gradient-to-br from-[#0055DD] via-[#0066FF] to-[#0B3B6F] text-white">
+    <section id="home" className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden bg-gradient-to-br from-[#0055DD] via-[#0066FF] to-[#0B3B6F] text-white">
 
       {/* Concentric Organic Curved Contour Lines in Light Orange (Changed from White) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-35">
@@ -63,7 +63,9 @@ export function PersonalHeroSection() {
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
               {/* Apple App Store */}
               <a
-                href="#download"
+                href="https://apps.apple.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-950 hover:bg-slate-900 border border-white/20 text-white shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center justify-center gap-3 group cursor-pointer hover:-translate-y-0.5"
               >
                 <AppleLogo className="w-7 h-7 text-white shrink-0 group-hover:scale-105 transition-transform" />
@@ -79,7 +81,9 @@ export function PersonalHeroSection() {
 
               {/* Google Play Store */}
               <a
-                href="#download"
+                href="https://play.google.com/store/apps"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-950 hover:bg-slate-900 border border-white/20 text-white shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center justify-center gap-3 group cursor-pointer hover:-translate-y-0.5"
               >
                 {/* Google Play Triangle SVG */}
@@ -144,7 +148,7 @@ export function PersonalHeroSection() {
               <div
                 onClick={handleSimulateTap}
                 title="Click or tap card to simulate contactless payment"
-                className={`absolute top-4 sm:top-8 left-0 sm:-left-6 z-40 w-56 sm:w-64 h-34 sm:h-38 rounded-2xl p-4 text-white shadow-2xl border border-white/30 cursor-pointer transition-all duration-700 touch-manipulation ring-1 ring-white/25 ${tapState === "tapping"
+                className={`absolute top-4 sm:top-8 left-0 sm:-left-6 z-50 w-56 sm:w-64 h-34 sm:h-38 rounded-2xl p-4 text-white shadow-2xl border border-white/30 cursor-pointer transition-all duration-700 touch-manipulation ring-1 ring-white/25 ${tapState === "tapping"
                   ? "translate-y-24 translate-x-12 rotate-0 scale-95 shadow-orange-500/30"
                   : "animate-float-card-reverse shadow-2xl shadow-slate-950/60 hover:scale-105"
                   }`}
@@ -189,15 +193,15 @@ export function PersonalHeroSection() {
                 </div>
               </div>
 
-              {/* REALISTIC ANDROID SMARTPHONE CHASSIS (Just like in Merchant side) */}
-              <div className="relative w-[280px] sm:w-[316px] h-[580px] sm:h-[625px] bg-slate-900 rounded-[38px] p-2.5 shadow-2xl border-[4px] border-slate-700 shadow-slate-950/40 flex flex-col z-20">
+              {/* REALISTIC ANDROID SMARTPHONE CHASSIS (Behind the card) */}
+              <div className="relative z-10 w-[280px] sm:w-[316px] h-[580px] sm:h-[625px] bg-slate-900 rounded-[38px] p-2.5 shadow-2xl border-[4px] border-slate-700 shadow-slate-950/40 flex flex-col">
 
-                {/* Metallic Hardware Buttons */}
-                <div className="absolute -right-[7px] top-28 w-[3px] h-9 bg-slate-600 rounded-r-xs shadow-xs" />
-                <div className="absolute -right-[7px] top-42 w-[3px] h-16 bg-slate-600 rounded-r-xs shadow-xs" />
+              {/* Metallic Hardware Buttons */}
+              <div className="absolute -right-[7px] top-28 w-[3px] h-9 bg-slate-600 rounded-r-xs shadow-xs" />
+              <div className="absolute -right-[7px] top-42 w-[3px] h-16 bg-slate-600 rounded-r-xs shadow-xs" />
 
-                {/* Top Speaker Micro-Slit */}
-                <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-12 h-1 bg-slate-950/80 rounded-full z-40 border-b border-slate-700/50" />
+              {/* Top Speaker Micro-Slit (Behind the card) */}
+              <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-12 h-1 bg-slate-950/80 rounded-full z-10 border-b border-slate-700/50" />
 
                 {/* Inner Screen */}
                 <div className="relative w-full h-full rounded-[30px] bg-[#072040] overflow-hidden flex flex-col justify-between p-4 sm:p-5 text-white shadow-inner">

@@ -135,9 +135,9 @@ export function HeroSection({
             <div
               onClick={handleStartPayment}
               title="Click or tap to simulate contactless payment"
-              className={`absolute top-4 sm:top-8 right-0 sm:right-2 md:-right-6 z-40 w-56 sm:w-64 h-34 sm:h-38 rounded-2xl p-4 text-white shadow-2xl border border-white/30 cursor-pointer transition-all duration-700 touch-manipulation ring-1 ring-white/25 ${isTappedCard
-                  ? "translate-y-28 translate-x-4 rotate-0 scale-95 shadow-orange-500/30"
-                  : "rotate-6 hover:rotate-2 hover:-translate-y-1 animate-float-card shadow-2xl shadow-slate-950/60"
+              className={`absolute top-4 sm:top-8 right-0 sm:right-2 md:-right-6 z-50 w-56 sm:w-64 h-34 sm:h-38 rounded-2xl p-4 text-white shadow-2xl border border-white/30 cursor-pointer transition-all duration-700 touch-manipulation ring-1 ring-white/25 ${isTappedCard
+                ? "translate-y-28 translate-x-4 rotate-0 scale-95 shadow-orange-500/30"
+                : "rotate-6 hover:rotate-2 hover:-translate-y-1 animate-float-card shadow-2xl shadow-slate-950/60"
                 }`}
               style={{
                 background: "linear-gradient(135deg, #092B54 0%, #0B3B6F 45%, #0050B3 100%)",
@@ -176,15 +176,15 @@ export function HeroSection({
               </div>
             </div>
 
-            {/* REALISTIC ANDROID FLAGSHIP PHONE CHASSIS (Addressing User Request 2) */}
-            <div className="relative w-[290px] sm:w-[316px] h-[590px] sm:h-[625px] bg-slate-900 rounded-[38px] p-2.5 shadow-2xl border-[4px] border-slate-700 shadow-slate-950/40 flex flex-col">
+            {/* REALISTIC ANDROID FLAGSHIP PHONE CHASSIS (Chassis behind the card) */}
+            <div className="relative z-10 w-[290px] sm:w-[316px] h-[590px] sm:h-[625px] bg-slate-900 rounded-[38px] p-2.5 shadow-2xl border-[4px] border-slate-700 shadow-slate-950/40 flex flex-col">
 
               {/* Metallic Hardware Buttons on Right Edge (Android Style) */}
               <div className="absolute -right-[7px] top-28 w-[3px] h-9 bg-slate-600 rounded-r-xs shadow-xs" />
               <div className="absolute -right-[7px] top-42 w-[3px] h-16 bg-slate-600 rounded-r-xs shadow-xs" />
 
-              {/* Top Speaker Micro-Slit on Upper Rim */}
-              <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-12 h-1 bg-slate-950/80 rounded-full z-40 border-b border-slate-700/50" />
+              {/* Top Speaker Micro-Slit on Upper Rim (Behind the card) */}
+              <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-12 h-1 bg-slate-950/80 rounded-full z-10 border-b border-slate-700/50" />
 
               {/* Inner Smartphone Screen with Uniform Slim Bezels */}
               <div className="relative w-full h-full rounded-[30px] bg-[#072040] overflow-hidden flex flex-col justify-between p-4 sm:p-5 text-white shadow-inner">
@@ -312,8 +312,8 @@ export function HeroSection({
                             type="button"
                             onClick={() => setAmount(preset)}
                             className={`text-[9px] sm:text-[10px] px-2 py-1 rounded-md font-semibold transition-colors cursor-pointer touch-manipulation min-h-[30px] flex-1 text-center ${amount === preset
-                                ? "bg-[#0B3B6F] text-white"
-                                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                              ? "bg-[#0B3B6F] text-white"
+                              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                               }`}
                           >
                             ₦{preset.split(".")[0]}

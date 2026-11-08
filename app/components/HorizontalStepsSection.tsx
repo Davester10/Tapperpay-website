@@ -238,9 +238,8 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
                       key={idx}
                       type="button"
                       onClick={() => navigateToStep(idx)}
-                      className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                        activeStepIndex === idx ? "w-7 bg-[#0066FF]" : "w-2.5 bg-slate-200 hover:bg-slate-300"
-                      }`}
+                      className={`h-2.5 rounded-full transition-all cursor-pointer ${activeStepIndex === idx ? "w-7 bg-[#0066FF]" : "w-2.5 bg-slate-200 hover:bg-slate-300"
+                        }`}
                       aria-label={`Go to step ${idx + 1}`}
                     />
                   ))}
@@ -291,13 +290,12 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
                     {/* Header: Step Number Circle & Tag */}
                     <div className="flex items-center justify-between mb-4">
                       <div
-                        className={`w-11 h-11 rounded-full flex items-center justify-center font-black text-sm border-2 transition-all ${
-                          isCurrent
+                        className={`w-11 h-11 rounded-full flex items-center justify-center font-black text-sm border-2 transition-all ${isCurrent
                             ? "border-[#0066FF] bg-[#0066FF] text-white shadow-md ring-4 ring-blue-100"
                             : isPassed
-                            ? "border-emerald-500 bg-emerald-50 text-emerald-600"
-                            : "border-slate-200 text-slate-400 bg-white"
-                        }`}
+                              ? "border-emerald-500 bg-emerald-50 text-emerald-600"
+                              : "border-slate-200 text-slate-400 bg-white"
+                          }`}
                       >
                         {isPassed && index < activeStepIndex ? <Check className="w-4 h-4 stroke-[3]" /> : step.num}
                       </div>
@@ -360,11 +358,10 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
                     {/* Step Indicator Header: Circle + Connecting Progress Line */}
                     <div className="relative flex items-center mb-6">
                       <div
-                        className={`w-14 h-14 rounded-full flex items-center justify-center font-bold text-lg border-2 z-10 transition-all duration-300 ${
-                          isPassed || isCurrent
+                        className={`w-14 h-14 rounded-full flex items-center justify-center font-bold text-lg border-2 z-10 transition-all duration-300 ${isPassed || isCurrent
                             ? "border-[#0066FF] text-[#0066FF] bg-white ring-4 ring-blue-50 shadow-md"
                             : "border-slate-200 text-slate-400 bg-white"
-                        }`}
+                          }`}
                       >
                         {isPassed && index < activeStepIndex ? (
                           <Check className="w-5 h-5 text-[#0066FF] stroke-[3]" />
@@ -381,13 +378,12 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
                             style={{
                               width:
                                 scrollProgress >= (index + 1) / (steps.length - 1)
-                                    ? "100%"
-                                    : scrollProgress > index / (steps.length - 1)
-                                    ? `${
-                                        ((scrollProgress - index / (steps.length - 1)) /
-                                          (1 / (steps.length - 1))) *
-                                        100
-                                      }%`
+                                  ? "100%"
+                                  : scrollProgress > index / (steps.length - 1)
+                                    ? `${((scrollProgress - index / (steps.length - 1)) /
+                                      (1 / (steps.length - 1))) *
+                                    100
+                                    }%`
                                     : "0%",
                             }}
                           />
@@ -419,11 +415,9 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
           <div className="flex flex-col sm:flex-row items-center justify-start gap-3 sm:gap-4">
             {/* Apple App Store Badge */}
             <a
-              href="#download"
-              onClick={(e) => {
-                e.preventDefault();
-                onOpenGetStarted();
-              }}
+              href="https://apps.apple.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#091B33] hover:bg-[#0E284D] active:scale-95 text-white transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer touch-manipulation"
             >
               <AppleLogo className="w-6 h-6 fill-current text-white shrink-0" />
@@ -435,11 +429,9 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
 
             {/* Google Play Store Badge */}
             <a
-              href="#download"
-              onClick={(e) => {
-                e.preventDefault();
-                onOpenGetStarted();
-              }}
+              href="https://play.google.com/store/apps"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#091B33] hover:bg-[#0E284D] active:scale-95 text-white transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer touch-manipulation"
             >
               <svg viewBox="0 0 24 24" className="w-6 h-6 shrink-0" fill="currentColor">

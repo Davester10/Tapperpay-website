@@ -78,28 +78,26 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
             <button
               type="button"
               onClick={() => scrollToPlan("starter")}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                selectedPlan === "starter"
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${selectedPlan === "starter"
                   ? "bg-[#0B3B6F] text-white shadow-xs"
                   : "text-slate-600 hover:text-slate-900"
-              }`}
+                }`}
             >
               {audience === "merchant" ? "Starter Merchant" : "Everyday Personal"}
             </button>
             <button
               type="button"
               onClick={() => scrollToPlan("enterprise")}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                selectedPlan === "enterprise"
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${selectedPlan === "enterprise"
                   ? "bg-[#FF6A2C] text-white shadow-xs"
                   : "text-slate-600 hover:text-slate-900"
-              }`}
+                }`}
             >
               {audience === "merchant" ? "Custom Enterprise" : "Platinum Premium"}
             </button>
           </div>
           <span className="text-[11px] font-semibold text-slate-400">
-            ← Swipe cards horizontally on mobile →
+            ← Swipe horizontally to view other offers →
           </span>
         </div>
 
@@ -115,11 +113,10 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
               {/* Card 1: Standard Pay-As-You-Go (Interactive) */}
               <div
                 onClick={() => setSelectedPlan("starter")}
-                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
-                  selectedPlan === "starter"
+                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${selectedPlan === "starter"
                     ? "border-2 border-[#0B3B6F] bg-white shadow-2xl ring-4 ring-[#0B3B6F]/10 scale-[1.01] -translate-y-1"
                     : "border border-slate-200 bg-white hover:border-[#0B3B6F]/40 hover:shadow-lg opacity-90 hover:opacity-100"
-                }`}
+                  }`}
               >
                 {/* Blue Badge: MOST POPULAR */}
                 <div className="absolute -top-3.5 left-8 px-3.5 py-1 rounded-full bg-[#0B3B6F] text-white text-xs font-bold uppercase tracking-wider shadow-xs flex items-center gap-1.5">
@@ -207,16 +204,14 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
               {/* Card 2: Enterprise & High Volume (Interactive) */}
               <div
                 onClick={() => setSelectedPlan("enterprise")}
-                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
-                  selectedPlan === "enterprise"
+                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${selectedPlan === "enterprise"
                     ? "border-2 border-[#FF6A2C] bg-white shadow-2xl ring-4 ring-[#FF6A2C]/10 scale-[1.01] -translate-y-1"
                     : "border border-slate-200 bg-slate-50/70 hover:bg-white hover:border-[#FF6A2C]/50 hover:shadow-lg opacity-90 hover:opacity-100"
-                }`}
+                  }`}
               >
                 {/* Orange Badge: SELECTED PLAN */}
-                <div className={`absolute -top-3.5 left-8 px-3.5 py-1 rounded-full text-white text-xs font-bold uppercase tracking-wider shadow-xs flex items-center gap-1.5 ${
-                  selectedPlan === "enterprise" ? "bg-[#FF6A2C]" : "bg-slate-700"
-                }`}>
+                <div className={`absolute -top-3.5 left-8 px-3.5 py-1 rounded-full text-white text-xs font-bold uppercase tracking-wider shadow-xs flex items-center gap-1.5 ${selectedPlan === "enterprise" ? "bg-[#FF6A2C]" : "bg-slate-700"
+                  }`}>
                   <Sparkles className="w-3.5 h-3.5 fill-current" />
                   <span>SELECTED PLAN</span>
                 </div>
@@ -303,11 +298,10 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
               {/* Personal Card 1 */}
               <div
                 onClick={() => setSelectedPlan("starter")}
-                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
-                  selectedPlan === "starter"
+                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${selectedPlan === "starter"
                     ? "border-2 border-[#0B3B6F] bg-white shadow-2xl ring-4 ring-[#0B3B6F]/10 scale-[1.01]"
                     : "border border-slate-200 bg-white hover:shadow-lg"
-                }`}
+                  }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -357,11 +351,10 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
               {/* Personal Card 2 */}
               <div
                 onClick={() => setSelectedPlan("enterprise")}
-                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
-                  selectedPlan === "enterprise"
+                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${selectedPlan === "enterprise"
                     ? "border-2 border-[#0B3B6F] bg-white shadow-2xl ring-4 ring-[#0B3B6F]/10 scale-[1.01]"
                     : "border border-slate-200 bg-slate-50/70 hover:bg-white hover:shadow-lg"
-                }`}
+                  }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">

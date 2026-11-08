@@ -93,7 +93,7 @@ export function Navbar({
           
           {/* Left: Brand Logo & Segmented Pill Switcher (Moniepoint Style matching Image 2) */}
           <div className="flex items-center gap-2.5 sm:gap-6 shrink-0">
-            <Link href="/" className="flex items-center gap-2 group">
+            <Link href={currentPage === "personal" ? "/personal" : "/"} className="flex items-center gap-2 group">
               <TapperLogo className="w-8 h-8 sm:w-9 sm:h-9 shadow-md shrink-0" />
               <div className="flex flex-col">
                 <span className="text-lg sm:text-2xl font-black tracking-tight text-white group-hover:text-[#FF6A2C] transition-colors duration-200">
@@ -143,6 +143,18 @@ export function Navbar({
                 <a
                   key={link.name}
                   href={link.href}
+                  onClick={(e) => {
+                    if (link.id === "home") {
+                      e.preventDefault();
+                      const hero = document.getElementById("home");
+                      if (hero) {
+                        hero.scrollIntoView({ behavior: "smooth" });
+                      } else {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }
+                      setActiveSection("home");
+                    }
+                  }}
                   className={`px-3.5 py-1.5 rounded-full text-sm xl:text-base font-bold transition-all duration-200 ${
                     isActive
                       ? "text-white bg-white/15 shadow-2xs"
@@ -297,7 +309,19 @@ export function Navbar({
               <a
                 key={link.name}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  if (link.id === "home") {
+                    e.preventDefault();
+                    const hero = document.getElementById("home");
+                    if (hero) {
+                      hero.scrollIntoView({ behavior: "smooth" });
+                    } else {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                    setActiveSection("home");
+                  }
+                }}
                 className={`py-2.5 px-3.5 rounded-xl text-sm font-bold transition-colors ${
                   activeSection === link.id
                     ? "bg-white/20 text-white"
