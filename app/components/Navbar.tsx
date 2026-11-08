@@ -92,11 +92,11 @@ export function Navbar({
         <div className="flex items-center justify-between gap-4">
           
           {/* Left: Brand Logo & Segmented Pill Switcher (Moniepoint Style matching Image 2) */}
-          <div className="flex items-center gap-3 sm:gap-6 shrink-0">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <TapperLogo className="w-8 h-8 sm:w-9 sm:h-9 shadow-md" />
+          <div className="flex items-center gap-2.5 sm:gap-6 shrink-0">
+            <Link href="/" className="flex items-center gap-2 group">
+              <TapperLogo className="w-8 h-8 sm:w-9 sm:h-9 shadow-md shrink-0" />
               <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black tracking-tight text-white group-hover:text-[#FF6A2C] transition-colors duration-200">
+                <span className="text-lg sm:text-2xl font-black tracking-tight text-white group-hover:text-[#FF6A2C] transition-colors duration-200">
                   TapperPay
                 </span>
                 <span className="hidden sm:block text-[9px] font-bold uppercase tracking-widest text-blue-200/70 -mt-0.5">
@@ -105,8 +105,8 @@ export function Navbar({
               </div>
             </Link>
 
-            {/* Segmented Business / Personal Switcher Pill (Matching Image 2) */}
-            <div className="flex items-center p-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm">
+            {/* Segmented Business / Personal Switcher Pill: visible on sm+ screens */}
+            <div className="hidden sm:flex items-center p-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm">
               {currentPage === "business" ? (
                 <span className="px-3.5 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-white/25 text-white shadow-xs">
                   Business
@@ -156,15 +156,15 @@ export function Navbar({
           </nav>
 
           {/* Right Action Area (Sign in on Business only, Responsive Country/Region Dropdown) */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-            {/* Sign in Button: ONLY shown on Business page */}
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+            {/* Sign in Button: ONLY shown on Business page, sleek and aligned on mobile */}
             {currentPage === "business" && (
               <button
                 onClick={onOpenSignIn}
-                className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-white hover:bg-slate-100 active:scale-98 text-[#0B3B6F] text-sm sm:text-base font-extrabold transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer touch-manipulation"
+                className="px-3.5 sm:px-6 py-1.5 sm:py-2.5 rounded-full bg-white hover:bg-slate-100 active:scale-98 text-[#0B3B6F] text-xs sm:text-base font-extrabold transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation shrink-0"
               >
                 <span>Sign in</span>
-                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
               </button>
             )}
 
@@ -266,14 +266,39 @@ export function Navbar({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#031B39]/98 border-b border-white/15 px-5 pt-3 pb-6 shadow-2xl backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
-          <nav className="flex flex-col space-y-2 mb-4">
+        <div className="lg:hidden bg-[#031B39]/98 border-b border-white/15 px-4 pt-3 pb-6 shadow-2xl backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
+          {/* Prominent Mobile Experience Switcher */}
+          <div className="flex items-center justify-between p-2 rounded-2xl bg-white/10 mb-4 border border-white/10">
+            <span className="text-xs font-bold text-white/80 pl-1">Experience:</span>
+            <div className="flex gap-1.5">
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all ${
+                  currentPage === "business" ? "bg-white text-[#0B3B6F] shadow-xs" : "text-white/80 hover:bg-white/10"
+                }`}
+              >
+                Business
+              </Link>
+              <Link
+                href="/personal"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all ${
+                  currentPage === "personal" ? "bg-white text-[#0B3B6F] shadow-xs" : "text-white/80 hover:bg-white/10"
+                }`}
+              >
+                Personal
+              </Link>
+            </div>
+          </div>
+
+          <nav className="flex flex-col space-y-1.5 mb-4">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`py-2 px-3.5 rounded-xl text-base font-bold transition-colors ${
+                className={`py-2.5 px-3.5 rounded-xl text-sm font-bold transition-colors ${
                   activeSection === link.id
                     ? "bg-white/20 text-white"
                     : "text-white/80 hover:bg-white/10 hover:text-white"

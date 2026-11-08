@@ -135,7 +135,7 @@ export function HeroSection({
             <div
               onClick={handleStartPayment}
               title="Click or tap to simulate contactless payment"
-              className={`absolute top-4 sm:top-8 -right-2 sm:right-2 md:-right-6 z-40 w-56 sm:w-64 h-34 sm:h-38 rounded-2xl p-4 text-white shadow-2xl border border-white/30 cursor-pointer transition-all duration-700 touch-manipulation ring-1 ring-white/25 ${isTappedCard
+              className={`absolute top-4 sm:top-8 right-0 sm:right-2 md:-right-6 z-40 w-56 sm:w-64 h-34 sm:h-38 rounded-2xl p-4 text-white shadow-2xl border border-white/30 cursor-pointer transition-all duration-700 touch-manipulation ring-1 ring-white/25 ${isTappedCard
                   ? "translate-y-28 translate-x-4 rotate-0 scale-95 shadow-orange-500/30"
                   : "rotate-6 hover:rotate-2 hover:-translate-y-1 animate-float-card shadow-2xl shadow-slate-950/60"
                 }`}

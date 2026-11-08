@@ -144,7 +144,7 @@ export function PersonalHeroSection() {
               <div
                 onClick={handleSimulateTap}
                 title="Click or tap card to simulate contactless payment"
-                className={`absolute top-4 sm:top-8 -left-2 sm:-left-6 z-40 w-56 sm:w-64 h-34 sm:h-38 rounded-2xl p-4 text-white shadow-2xl border border-white/30 cursor-pointer transition-all duration-700 touch-manipulation ring-1 ring-white/25 ${tapState === "tapping"
+                className={`absolute top-4 sm:top-8 left-0 sm:-left-6 z-40 w-56 sm:w-64 h-34 sm:h-38 rounded-2xl p-4 text-white shadow-2xl border border-white/30 cursor-pointer transition-all duration-700 touch-manipulation ring-1 ring-white/25 ${tapState === "tapping"
                   ? "translate-y-24 translate-x-12 rotate-0 scale-95 shadow-orange-500/30"
                   : "animate-float-card-reverse shadow-2xl shadow-slate-950/60 hover:scale-105"
                   }`}
@@ -334,12 +334,12 @@ export function PersonalHeroSection() {
               </div>
 
               {/* FLOATING AVAILABLE BALANCE CARD (Moving continuously) */}
-              <div className="absolute -left-3 sm:-left-8 bottom-12 sm:bottom-16 z-30 w-56 sm:w-64 rounded-2xl bg-gradient-to-br from-[#FFF9E6] to-[#FFF1C2] text-slate-900 p-4 shadow-2xl border border-yellow-200/90 animate-float-balance transition-all hover:scale-102">
+              <div className="absolute left-0 sm:-left-8 bottom-12 sm:bottom-16 z-30 w-56 sm:w-64 rounded-2xl bg-gradient-to-br from-[#FFF9E6] to-[#FFF1C2] text-slate-900 p-4 shadow-2xl border border-yellow-200/90 animate-float-balance transition-all hover:scale-102">
                 <div className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">
                   Available Balance
                 </div>
                 <div className="text-xl sm:text-2xl font-black text-[#0B3B6F] mt-0.5 tracking-tight">
-                  ₦150,340.00
+                  ₦100,050,000.00
                 </div>
                 <div className="mt-2 flex items-center justify-between text-[11px] font-bold text-[#0066FF]">
                   <span className="hover:underline flex items-center gap-1 cursor-pointer">
@@ -352,7 +352,7 @@ export function PersonalHeroSection() {
               </div>
 
               {/* FLOATING ACTION BUTTONS: Transfer & Scan QR (Moving continuously) */}
-              <div className="absolute -right-2 sm:-right-8 bottom-6 sm:bottom-10 z-30 p-2.5 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-100 flex items-center gap-2 text-slate-800 animate-float-actions">
+              <div className="absolute right-0 sm:-right-8 bottom-6 sm:bottom-10 z-30 p-2.5 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-100 flex items-center gap-2 text-slate-800 animate-float-actions">
                 {/* Transfer */}
                 <div className="flex flex-col items-center justify-center p-2 rounded-xl hover:bg-blue-50 transition-colors cursor-pointer w-16 sm:w-18 h-16 sm:h-18 text-center">
                   <div className="w-8 sm:w-9 h-8 sm:h-9 rounded-xl bg-blue-100 text-[#0066FF] flex items-center justify-center mb-1 shadow-2xs">

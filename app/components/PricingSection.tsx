@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Check, ArrowRight, Zap, ShieldCheck, CreditCard, Sparkles, Building2, Phone, X, CheckCircle2 } from "lucide-react";
 import { SignInModal } from "./SignInModal";
 
@@ -10,7 +10,7 @@ interface PricingSectionProps {
 }
 
 export function PricingSection({ audience = "merchant", onOpenGetStarted }: PricingSectionProps) {
-  const [selectedPlan, setSelectedPlan] = useState<"starter" | "enterprise">("starter");
+  const [selectedPlan, setSelectedPlan] = useState<"starter" | "enterprise">("enterprise");
   const [showSpecs, setShowSpecs] = useState<boolean>(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
@@ -18,6 +18,25 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
   const [enterpriseSubmitted, setEnterpriseSubmitted] = useState<boolean>(false);
   const [fleetSize, setFleetSize] = useState<string>("5-20 Terminals");
   const [businessName, setBusinessName] = useState<string>("");
+  const pricingScrollRef = useRef<HTMLDivElement>(null);
+
+  const handleMobilePricingScroll = () => {
+    if (!pricingScrollRef.current) return;
+    const scrollLeft = pricingScrollRef.current.scrollLeft;
+    const threshold = pricingScrollRef.current.clientWidth * 0.4;
+    if (scrollLeft > threshold) {
+      setSelectedPlan("enterprise");
+    } else {
+      setSelectedPlan("starter");
+    }
+  };
+
+  const scrollToPlan = (plan: "starter" | "enterprise") => {
+    setSelectedPlan(plan);
+    if (!pricingScrollRef.current) return;
+    const targetLeft = plan === "starter" ? 0 : 330;
+    pricingScrollRef.current.scrollTo({ left: targetLeft, behavior: "smooth" });
+  };
 
   const handleEnterpriseSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +53,7 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
   };
 
   return (
-    <section id="pricing" className="py-24 bg-white relative border-t border-slate-100">
+    <section id="pricing" className="py-16 sm:py-20 bg-white relative border-t border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
@@ -53,24 +72,59 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
           </p>
         </div>
 
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
+        {/* Mobile Plan Selector & Swipe Hint */}
+        <div className="flex md:hidden flex-col items-center gap-2 mb-6">
+          <div className="flex items-center p-1 rounded-full bg-slate-100 border border-slate-200 shadow-2xs">
+            <button
+              type="button"
+              onClick={() => scrollToPlan("starter")}
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                selectedPlan === "starter"
+                  ? "bg-[#0B3B6F] text-white shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              {audience === "merchant" ? "Starter Merchant" : "Everyday Personal"}
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToPlan("enterprise")}
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                selectedPlan === "enterprise"
+                  ? "bg-[#FF6A2C] text-white shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              {audience === "merchant" ? "Custom Enterprise" : "Platinum Premium"}
+            </button>
+          </div>
+          <span className="text-[11px] font-semibold text-slate-400">
+            ← Swipe cards horizontally on mobile →
+          </span>
+        </div>
+
+        {/* Pricing Cards (Horizontal Scroll on Mobile, 2-Column Grid on Desktop) */}
+        <div
+          ref={pricingScrollRef}
+          onScroll={handleMobilePricingScroll}
+          className="flex md:grid md:grid-cols-2 gap-5 sm:gap-8 max-w-4xl mx-auto items-stretch overflow-x-auto md:overflow-x-visible pb-8 pt-4 px-4 -mx-4 sm:mx-auto sm:px-0 snap-x snap-mandatory scrollbar-none"
+        >
 
           {audience === "merchant" ? (
             <>
               {/* Card 1: Standard Pay-As-You-Go (Interactive) */}
               <div
                 onClick={() => setSelectedPlan("starter")}
-                className={`rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
+                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
                   selectedPlan === "starter"
                     ? "border-2 border-[#0B3B6F] bg-white shadow-2xl ring-4 ring-[#0B3B6F]/10 scale-[1.01] -translate-y-1"
-                    : "border border-slate-200 bg-white hover:border-slate-300 hover:shadow-lg opacity-90 hover:opacity-100"
+                    : "border border-slate-200 bg-white hover:border-[#0B3B6F]/40 hover:shadow-lg opacity-90 hover:opacity-100"
                 }`}
               >
-                {/* Badge */}
-                <div className="absolute -top-3.5 left-8 px-3.5 py-1 rounded-full bg-[#FF6A2C] text-white text-xs font-bold uppercase tracking-wider shadow-xs flex items-center gap-1.5">
+                {/* Blue Badge: MOST POPULAR */}
+                <div className="absolute -top-3.5 left-8 px-3.5 py-1 rounded-full bg-[#0B3B6F] text-white text-xs font-bold uppercase tracking-wider shadow-xs flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 fill-current" />
-                  <span>{selectedPlan === "starter" ? "Active Selected Plan" : "Most Popular"}</span>
+                  <span>MOST POPULAR</span>
                 </div>
 
                 <div>
@@ -80,7 +134,7 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
                       <p className="text-xs text-slate-500 mt-0.5">For retailers, cafes, kiosks &amp; sole traders</p>
                     </div>
                     <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0B3B6F] flex items-center justify-center">
-                      <Zap className="w-5 h-5 text-[#FF6A2C]" />
+                      <Zap className="w-5 h-5 text-[#0B3B6F]" />
                     </div>
                   </div>
 
@@ -153,19 +207,19 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
               {/* Card 2: Enterprise & High Volume (Interactive) */}
               <div
                 onClick={() => setSelectedPlan("enterprise")}
-                className={`rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
+                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
                   selectedPlan === "enterprise"
-                    ? "border-2 border-[#0B3B6F] bg-white shadow-2xl ring-4 ring-[#0B3B6F]/10 scale-[1.01] -translate-y-1"
-                    : "border border-slate-200 bg-slate-50/70 hover:bg-white hover:border-slate-300 hover:shadow-lg opacity-90 hover:opacity-100"
+                    ? "border-2 border-[#FF6A2C] bg-white shadow-2xl ring-4 ring-[#FF6A2C]/10 scale-[1.01] -translate-y-1"
+                    : "border border-slate-200 bg-slate-50/70 hover:bg-white hover:border-[#FF6A2C]/50 hover:shadow-lg opacity-90 hover:opacity-100"
                 }`}
               >
-                {/* Active Indicator Badge */}
-                {selectedPlan === "enterprise" && (
-                  <div className="absolute -top-3.5 left-8 px-3.5 py-1 rounded-full bg-[#0066FF] text-white text-xs font-bold uppercase tracking-wider shadow-xs flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 fill-current" />
-                    <span>Selected Plan</span>
-                  </div>
-                )}
+                {/* Orange Badge: SELECTED PLAN */}
+                <div className={`absolute -top-3.5 left-8 px-3.5 py-1 rounded-full text-white text-xs font-bold uppercase tracking-wider shadow-xs flex items-center gap-1.5 ${
+                  selectedPlan === "enterprise" ? "bg-[#FF6A2C]" : "bg-slate-700"
+                }`}>
+                  <Sparkles className="w-3.5 h-3.5 fill-current" />
+                  <span>SELECTED PLAN</span>
+                </div>
 
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -173,8 +227,8 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
                       <h3 className="text-xl font-bold text-slate-900">Custom Enterprise</h3>
                       <p className="text-xs text-slate-500 mt-0.5">For multi-branch retail chains, supermarkets &amp; delivery fleets</p>
                     </div>
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
-                      <ShieldCheck className="w-5 h-5 text-[#0066FF]" />
+                    <div className="w-10 h-10 rounded-xl bg-orange-50 text-[#FF6A2C] flex items-center justify-center">
+                      <ShieldCheck className="w-5 h-5 text-[#FF6A2C]" />
                     </div>
                   </div>
 
@@ -183,7 +237,7 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
                       <span className="text-3xl sm:text-4xl font-black text-slate-900">Custom</span>
                       <span className="text-xs text-slate-500 font-medium">tailored volume interchange rates</span>
                     </div>
-                    <div className="text-xs font-semibold text-blue-600 mt-1">Dedicated Account Manager &amp; API SDK</div>
+                    <div className="text-xs font-semibold text-[#FF6A2C] mt-1">Dedicated Account Manager &amp; API SDK</div>
                   </div>
 
                   <ul className="space-y-3 text-xs sm:text-sm text-slate-600 mb-6">
@@ -249,7 +303,7 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
               {/* Personal Card 1 */}
               <div
                 onClick={() => setSelectedPlan("starter")}
-                className={`rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
+                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
                   selectedPlan === "starter"
                     ? "border-2 border-[#0B3B6F] bg-white shadow-2xl ring-4 ring-[#0B3B6F]/10 scale-[1.01]"
                     : "border border-slate-200 bg-white hover:shadow-lg"
@@ -303,7 +357,7 @@ export function PricingSection({ audience = "merchant", onOpenGetStarted }: Pric
               {/* Personal Card 2 */}
               <div
                 onClick={() => setSelectedPlan("enterprise")}
-                className={`rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
+                className={`w-[86vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 snap-center rounded-3xl p-6 sm:p-8 relative flex flex-col justify-between transition-all duration-300 cursor-pointer ${
                   selectedPlan === "enterprise"
                     ? "border-2 border-[#0B3B6F] bg-white shadow-2xl ring-4 ring-[#0B3B6F]/10 scale-[1.01]"
                     : "border border-slate-200 bg-slate-50/70 hover:bg-white hover:shadow-lg"

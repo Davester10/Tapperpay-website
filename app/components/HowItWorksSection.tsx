@@ -50,7 +50,7 @@ export function HowItWorksSection({ onOpenGetStarted }: HowItWorksSectionProps) 
 
         {/* Content Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
+
           {/* Left Column: Interactive Stepper */}
           <div className="lg:col-span-6 space-y-6">
             {steps.map((step) => {
@@ -61,19 +61,17 @@ export function HowItWorksSection({ onOpenGetStarted }: HowItWorksSectionProps) 
                 <div
                   key={step.num}
                   onClick={() => setActiveStep(step.num)}
-                  className={`p-6 rounded-2xl border transition-all duration-300 cursor-pointer flex items-start gap-4 ${
-                    isSelected
-                      ? "bg-blue-50/60 border-blue-200 shadow-md ring-1 ring-blue-500/20 translate-x-2"
-                      : "bg-white border-slate-100 hover:border-slate-200 hover:bg-slate-50/50"
-                  }`}
+                  className={`p-6 rounded-2xl border transition-all duration-300 cursor-pointer flex items-start gap-4 ${isSelected
+                    ? "bg-blue-50/60 border-blue-200 shadow-md ring-1 ring-blue-500/20 translate-x-2"
+                    : "bg-white border-slate-100 hover:border-slate-200 hover:bg-slate-50/50"
+                    }`}
                 >
                   {/* Step Number Circle */}
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 font-bold text-sm transition-colors duration-200 ${
-                      isSelected
-                        ? "bg-[#0B3B6F] text-white shadow-md shadow-[#0B3B6F]/20"
-                        : "bg-blue-100/70 text-[#0B3B6F]"
-                    }`}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 font-bold text-sm transition-colors duration-200 ${isSelected
+                      ? "bg-[#0B3B6F] text-white shadow-md shadow-[#0B3B6F]/20"
+                      : "bg-blue-100/70 text-[#0B3B6F]"
+                      }`}
                   >
                     {step.num}
                   </div>
@@ -83,9 +81,8 @@ export function HowItWorksSection({ onOpenGetStarted }: HowItWorksSectionProps) 
                     <div className="flex items-center gap-2 mb-1">
                       <Icon className={`w-4 h-4 ${isSelected ? "text-[#FF6A2C]" : "text-slate-400"}`} />
                       <h3
-                        className={`text-lg font-bold tracking-tight transition-colors ${
-                          isSelected ? "text-[#0B3B6F]" : "text-slate-800"
-                        }`}
+                        className={`text-lg font-bold tracking-tight transition-colors ${isSelected ? "text-[#0B3B6F]" : "text-slate-800"
+                          }`}
                       >
                         {step.title}
                       </h3>
@@ -142,7 +139,7 @@ export function HowItWorksSection({ onOpenGetStarted }: HowItWorksSectionProps) 
 
               {/* Phone Inner Screen */}
               <div className="w-full h-full rounded-[36px] bg-gradient-to-b from-blue-50/60 to-white overflow-hidden flex flex-col justify-between p-5 text-slate-800 border border-slate-100">
-                
+
                 {/* Status Bar */}
                 <div className="flex items-center justify-between text-[11px] font-semibold text-slate-500 pt-1">
                   <span>9:41</span>

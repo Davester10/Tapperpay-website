@@ -8,7 +8,7 @@ export function FooterSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Row: 4 Columns + Socials */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12 pb-12 border-b border-white/20">
-          
+
           {/* Brand Column */}
           <div className="col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
@@ -39,9 +39,6 @@ export function FooterSection() {
               <li>
                 <a href="#faqs" className="text-white/90 hover:text-[#0B3B6F] transition-colors duration-200 inline-block">FAQs</a>
               </li>
-              <li>
-                <a href="/personal" className="text-white/90 hover:text-[#0B3B6F] transition-colors duration-200 inline-block">Personal Cards</a>
-              </li>
             </ul>
           </div>
 
@@ -60,9 +57,6 @@ export function FooterSection() {
               </li>
               <li>
                 <a href="#" className="text-white/90 hover:text-[#0B3B6F] transition-colors duration-200 inline-block">Contact</a>
-              </li>
-              <li>
-                <a href="#" className="text-white/90 hover:text-[#0B3B6F] transition-colors duration-200 inline-block">Press Kit</a>
               </li>
             </ul>
           </div>
