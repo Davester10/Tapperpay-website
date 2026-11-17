@@ -1,10 +1,14 @@
 "use client";
 
 import React from "react";
-import { Star, Quote, CheckCircle } from "lucide-react";
+import { Star, CheckCircle } from "lucide-react";
 
-export function TestimonialsSection() {
-  const testimonials = [
+interface TestimonialsSectionProps {
+  audience?: "merchant" | "customer";
+}
+
+export function TestimonialsSection({ audience = "merchant" }: TestimonialsSectionProps) {
+  const merchantTestimonials = [
     {
       name: "Tunde Adeyemi",
       role: "Retail Store Owner",
@@ -27,15 +31,50 @@ export function TestimonialsSection() {
     },
     {
       name: "Daniel Ekene",
-      role: "Freelancer",
+      role: "Freelancer & Trader",
       location: "Port Harcourt, Nigeria",
       quote:
-        "The dashboard gives me all the information I need, and the support team is always helpful.",
+        "The dashboard gives me all the information I need, settlement is next-day, and the support team is always helpful.",
       initials: "DE",
       avatarBg: "bg-emerald-600",
       rating: 5,
     },
   ];
+
+  const customerTestimonials = [
+    {
+      name: "Tunde A.",
+      role: "Daily Commuter",
+      location: "Lagos",
+      quote:
+        "I forgot my wallet at home at the fuel station, tapped my phone on the attendant's POS, and paid in 2 seconds. Lifesaver.",
+      initials: "TA",
+      avatarBg: "bg-[#0B3B6F]",
+      rating: 5,
+    },
+    {
+      name: "Chioma O.",
+      role: "Product Designer",
+      location: "Abuja",
+      quote:
+        "Splitting dinner bills with friends and paying for groceries without waiting for bank transfer alerts has completely changed my daily routine.",
+      initials: "CO",
+      avatarBg: "bg-[#FF6A2C]",
+      rating: 5,
+    },
+    {
+      name: "Daniel E.",
+      role: "Software Engineer",
+      location: "Port Harcourt",
+      quote:
+        "Having my virtual dollar card for subscriptions and my naira tap-to-pay wallet in one clean app makes managing money effortless.",
+      initials: "DE",
+      avatarBg: "bg-emerald-600",
+      rating: 5,
+    },
+  ];
+
+  const testimonials = audience === "merchant" ? merchantTestimonials : customerTestimonials;
 
   return (
     <section className="py-16 sm:py-20 bg-slate-50/70 border-t border-slate-100 relative">
@@ -43,10 +82,12 @@ export function TestimonialsSection() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B3B6F] tracking-tight">
-            Trusted by Businesses Like Yours
+            {audience === "merchant" ? "Trusted by Businesses Like Yours" : "Loved by Everyday Consumers"}
           </h2>
           <p className="mt-3 text-base text-slate-600 leading-relaxed font-normal">
-            Join thousands of merchants who are already using TapperPay to accept payments and grow their business.
+            {audience === "merchant"
+              ? "Join thousands of merchants who are already using TapperPay to accept payments and grow their business."
+              : "Real stories from everyday shoppers, commuters, and creators enjoying fast, cashless payments."}
           </p>
         </div>
 
@@ -83,7 +124,9 @@ export function TestimonialsSection() {
                     <h4 className="text-sm font-bold text-slate-900">{item.name}</h4>
                     <CheckCircle className="w-3.5 h-3.5 text-blue-500 fill-blue-50" />
                   </div>
-                  <p className="text-xs text-slate-500">{item.role}</p>
+                  <p className="text-xs text-slate-500">
+                    {item.role} &bull; {item.location}
+                  </p>
                 </div>
               </div>
             </div>

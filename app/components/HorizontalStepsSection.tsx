@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { AppleLogo } from "./Icons";
 import { ChevronRight, ChevronLeft, Check } from "lucide-react";
 
@@ -9,11 +9,14 @@ interface HorizontalStepsSectionProps {
   onOpenGetStarted: () => void;
 }
 
-export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted }: HorizontalStepsSectionProps) {
-  const sectionRef = useRef<HTMLElement>(null);
+export function HorizontalStepsSection({
+  audience = "merchant",
+  onOpenGetStarted,
+}: HorizontalStepsSectionProps) {
+  const containerRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
-  const scrollProgressRef = useRef(0);
+
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [maxTranslatePx, setMaxTranslatePx] = useState(0);
@@ -23,7 +26,7 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
       num: 1,
       title: "Fill in your details and verify your phone number",
       description:
-        "Provide your email and phone number and verify your phone number with an OTP.",
+        "Provide your email and phone number and verify your phone number with an instant secure OTP.",
       tag: "Quick Signup",
     },
     {
@@ -36,14 +39,15 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
     {
       num: 3,
       title: "Run a Live Test Tap",
-      description: "Enter an amount on your screen and tap your own ATM card against the back of your phone. See the instant approval and digital receipt immediately.",
+      description:
+        "Enter an amount on your screen and tap your own ATM card against the back of your phone. See the instant approval and digital receipt immediately.",
       tag: "Zero Minimum",
     },
     {
       num: 4,
       title: "Start Selling & Get Instant Cash-Out",
       description:
-        "Start accepting contactless tap-to-pay transactions, transfers, and card payments on your phone. Withdraw funds directly to your commercial bank account anytime you want.",
+        "Start accepting contactless tap-to-pay transactions and card payments on your phone. Withdraw funds directly to your commercial bank account anytime you want.",
       tag: "Ready in 5 Mins",
     },
   ];
@@ -74,81 +78,74 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
       num: 4,
       title: "Tap & Pay with NFC",
       description:
-        "Tap your phone to pay in store or send money to friends and family with zero transaction charges.",
+        "Hold your phone near any contactless card terminal or merchant SoftPOS phone to pay in seconds.",
       tag: "Tap & Go",
     },
   ];
 
   const steps = audience === "merchant" ? merchantSteps : customerSteps;
 
-  // Measure exact pixel distance needed to scroll to the end
+  // Calculate pixel distance to slide from Step 1 to the end of Step 4
+  const updateDistance = useCallback(() => {
+    if (!trackRef.current) return;
+    const track = trackRef.current;
+    const parent = track.parentElement;
+    if (!parent) return;
+
+    const cards = track.children;
+    if (cards.length > 0) {
+      const lastCard = cards[cards.length - 1] as HTMLElement;
+      const totalRight = lastCard.offsetLeft + lastCard.offsetWidth;
+      const visibleWidth = parent.clientWidth;
+      const distance = Math.max(0, totalRight - visibleWidth + 32);
+      setMaxTranslatePx(distance);
+    } else {
+      const distance = Math.max(0, track.scrollWidth - parent.clientWidth + 48);
+      setMaxTranslatePx(distance);
+    }
+  }, []);
+
   useEffect(() => {
-    const updateDistance = () => {
-      if (!trackRef.current) return;
-      const track = trackRef.current;
-      const parent = track.parentElement;
-      if (!parent) return;
-
-      const cards = track.children;
-      if (cards.length > 0) {
-        const lastCard = cards[cards.length - 1] as HTMLElement;
-        const totalRight = lastCard.offsetLeft + lastCard.offsetWidth;
-        const visibleWidth = parent.clientWidth;
-        const distance = Math.max(0, totalRight - visibleWidth + 32);
-        setMaxTranslatePx(distance);
-      } else {
-        const distance = Math.max(0, track.scrollWidth - parent.clientWidth + 48);
-        setMaxTranslatePx(distance);
-      }
-    };
-
     updateDistance();
     window.addEventListener("resize", updateDistance);
     return () => window.removeEventListener("resize", updateDistance);
-  }, [steps.length]);
+  }, [updateDistance]);
 
-  // Intercept wheel scroll on desktop when section is in view:
-  // Completes horizontal scroll across all 4 steps before allowing vertical page scroll to continue!
+  // Buttery-smooth, glitch-free scroll progression on Desktop using requestAnimationFrame
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+    let animationFrameId: number;
 
-    const onWheel = (e: WheelEvent) => {
-      if (window.innerWidth < 768 || maxTranslatePx <= 0) return;
+    const handleScroll = () => {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(() => {
+        if (!containerRef.current) return;
+        if (window.innerWidth < 768) return;
 
-      const rect = section.getBoundingClientRect();
-      const inView = rect.top <= 140 && rect.bottom >= window.innerHeight * 0.45;
-      if (!inView) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const totalScrollable = containerRef.current.offsetHeight - window.innerHeight;
+        if (totalScrollable <= 0) return;
 
-      if (e.deltaY > 0) {
-        // Scrolling down: drive horizontal scroll until Step 4 is reached
-        if (scrollProgressRef.current < 0.98) {
-          e.preventDefault();
-          const stepDelta = Math.max(Math.abs(e.deltaY), 30) / 450;
-          const next = Math.min(scrollProgressRef.current + stepDelta, 1);
-          scrollProgressRef.current = next;
-          setScrollProgress(next);
-          const idx = Math.min(Math.floor(next * steps.length), steps.length - 1);
-          setActiveStepIndex(idx);
-        }
-        // When scrollProgress reaches 100%, do not preventDefault: page scrolls down naturally to next section
-      } else if (e.deltaY < 0) {
-        // Scrolling up: drive horizontal scroll back towards Step 1
-        if (scrollProgressRef.current > 0.02) {
-          e.preventDefault();
-          const stepDelta = Math.max(Math.abs(e.deltaY), 30) / 450;
-          const next = Math.max(scrollProgressRef.current - stepDelta, 0);
-          scrollProgressRef.current = next;
-          setScrollProgress(next);
-          const idx = Math.min(Math.floor(next * steps.length), steps.length - 1);
-          setActiveStepIndex(idx);
-        }
-      }
+        // Progress 0 when container top hits viewport top, 1 when reaching bottom
+        const progress = Math.min(Math.max(-rect.top / totalScrollable, 0), 1);
+        setScrollProgress(progress);
+
+        // Accurate step index threshold (cleanly locked for both scroll down and scroll up)
+        const stepIndex = Math.min(
+          Math.floor(progress * steps.length),
+          steps.length - 1
+        );
+        setActiveStepIndex(stepIndex);
+      });
     };
 
-    section.addEventListener("wheel", onWheel, { passive: false });
-    return () => section.removeEventListener("wheel", onWheel);
-  }, [maxTranslatePx, steps.length]);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [steps.length]);
 
   // Handle native mobile touch horizontal scrolling
   const handleMobileScroll = () => {
@@ -157,21 +154,27 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
     const scrollLeft = container.scrollLeft;
     const maxScroll = container.scrollWidth - container.clientWidth;
     if (maxScroll <= 0) return;
+
     const progress = Math.min(Math.max(scrollLeft / maxScroll, 0), 1);
     const index = Math.min(Math.round(progress * (steps.length - 1)), steps.length - 1);
     setActiveStepIndex(index);
     setScrollProgress(progress);
-    scrollProgressRef.current = progress;
   };
 
   // Navigate to specific step (responsive on both mobile and desktop)
   const navigateToStep = (index: number) => {
     setActiveStepIndex(index);
-    const progress = index / (steps.length - 1);
-    scrollProgressRef.current = progress;
-    setScrollProgress(progress);
+    const targetProgress = index / (steps.length - 1);
+    setScrollProgress(targetProgress);
 
-    if (mobileScrollRef.current) {
+    if (window.innerWidth >= 768 && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const totalScrollable = containerRef.current.offsetHeight - window.innerHeight;
+      const currentScrollY = window.scrollY || window.pageYOffset;
+      const containerTop = currentScrollY + rect.top;
+      const targetScrollY = containerTop + targetProgress * totalScrollable;
+      window.scrollTo({ top: targetScrollY, behavior: "smooth" });
+    } else if (mobileScrollRef.current) {
       const container = mobileScrollRef.current;
       const cards = container.children;
       if (cards[index]) {
@@ -205,17 +208,18 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
   return (
     <section
       id="how-it-works"
-      ref={sectionRef}
-      className="relative bg-white border-b border-slate-100 py-12 sm:py-16 overflow-hidden"
+      ref={containerRef}
+      className="relative bg-white border-b border-slate-100 md:h-[220vh]"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
+      {/* Sticky Viewport Container on Desktop (locks cleanly while scrolling through steps) */}
+      <div className="md:sticky md:top-20 lg:top-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 overflow-hidden flex flex-col justify-between">
+        
         {/* Top Header Badge & Title */}
-        <div className="w-full pt-2 pb-4 sm:pt-4 sm:pb-6">
+        <div className="w-full pb-4 sm:pb-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-2">
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 text-[#0066FF] text-xs font-bold uppercase tracking-wider mb-2">
-                <span>{audience === "merchant" ? "Merchant Onboarding" : "Customer Getting Started"}</span>
+                <span>{audience === "merchant" ? "Merchant Onboarding" : "Getting Started"}</span>
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0B3B6F] tracking-tight">
                 {audience === "merchant"
@@ -238,8 +242,11 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
                       key={idx}
                       type="button"
                       onClick={() => navigateToStep(idx)}
-                      className={`h-2.5 rounded-full transition-all cursor-pointer ${activeStepIndex === idx ? "w-7 bg-[#0066FF]" : "w-2.5 bg-slate-200 hover:bg-slate-300"
-                        }`}
+                      className={`h-2.5 rounded-full transition-all duration-200 cursor-pointer ${
+                        activeStepIndex === idx
+                          ? "w-7 bg-[#0066FF]"
+                          : "w-2.5 bg-slate-200 hover:bg-slate-300"
+                      }`}
                       aria-label={`Go to step ${idx + 1}`}
                     />
                   ))}
@@ -290,14 +297,19 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
                     {/* Header: Step Number Circle & Tag */}
                     <div className="flex items-center justify-between mb-4">
                       <div
-                        className={`w-11 h-11 rounded-full flex items-center justify-center font-black text-sm border-2 transition-all ${isCurrent
+                        className={`w-11 h-11 rounded-full flex items-center justify-center font-black text-sm border-2 transition-all ${
+                          isCurrent
                             ? "border-[#0066FF] bg-[#0066FF] text-white shadow-md ring-4 ring-blue-100"
                             : isPassed
-                              ? "border-emerald-500 bg-emerald-50 text-emerald-600"
-                              : "border-slate-200 text-slate-400 bg-white"
-                          }`}
+                            ? "border-emerald-500 bg-emerald-50 text-emerald-600"
+                            : "border-slate-200 text-slate-400 bg-white"
+                        }`}
                       >
-                        {isPassed && index < activeStepIndex ? <Check className="w-4 h-4 stroke-[3]" /> : step.num}
+                        {isPassed && index < activeStepIndex ? (
+                          <Check className="w-4 h-4 stroke-[3]" />
+                        ) : (
+                          step.num
+                        )}
                       </div>
 
                       <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 text-[#0066FF]">
@@ -322,7 +334,7 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
                       <span>✓ Ready to launch</span>
                       <button
                         onClick={onOpenGetStarted}
-                        className="text-[#0066FF] hover:underline flex items-center gap-0.5"
+                        className="text-[#0066FF] hover:underline flex items-center gap-0.5 cursor-pointer"
                       >
                         Start now →
                       </button>
@@ -331,19 +343,18 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
                 </div>
               );
             })}
-            {/* End spacer so the last card has padding and reaches 100% horizontal scroll on mobile */}
             <div className="w-6 shrink-0" aria-hidden="true" />
           </div>
         </div>
 
-        {/* DESKTOP / TABLET HORIZONTAL TRACK (Scrolls 100% to the end) */}
+        {/* DESKTOP / TABLET HORIZONTAL TRACK (Fluid, Glitch-Free Transform) */}
         <div className="hidden md:block w-full relative py-6">
           <div className="relative overflow-hidden w-full">
             <div
               ref={trackRef}
-              className="flex items-start transition-transform duration-300 ease-out will-change-transform"
+              className="flex items-start transition-transform duration-200 ease-out will-change-transform"
               style={{
-                transform: `translateX(-${currentTranslateX}px)`,
+                transform: `translate3d(-${currentTranslateX}px, 0, 0)`,
               }}
             >
               {steps.map((step, index) => {
@@ -353,15 +364,22 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
                 return (
                   <div
                     key={step.num}
-                    className="flex-shrink-0 w-[340px] lg:w-[390px] xl:w-[420px] pr-8 select-none group"
+                    className={`flex-shrink-0 w-[340px] lg:w-[390px] xl:w-[420px] pr-8 select-none transition-all duration-300 ${
+                      isCurrent
+                        ? "opacity-100 scale-100"
+                        : isPassed
+                        ? "opacity-90 scale-[0.99]"
+                        : "opacity-60 scale-[0.97]"
+                    }`}
                   >
                     {/* Step Indicator Header: Circle + Connecting Progress Line */}
                     <div className="relative flex items-center mb-6">
                       <div
-                        className={`w-14 h-14 rounded-full flex items-center justify-center font-bold text-lg border-2 z-10 transition-all duration-300 ${isPassed || isCurrent
+                        className={`w-14 h-14 rounded-full flex items-center justify-center font-bold text-lg border-2 z-10 transition-all duration-300 ${
+                          isPassed || isCurrent
                             ? "border-[#0066FF] text-[#0066FF] bg-white ring-4 ring-blue-50 shadow-md"
                             : "border-slate-200 text-slate-400 bg-white"
-                          }`}
+                        }`}
                       >
                         {isPassed && index < activeStepIndex ? (
                           <Check className="w-5 h-5 text-[#0066FF] stroke-[3]" />
@@ -374,17 +392,18 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
                       {index < steps.length - 1 && (
                         <div className="flex-1 h-[3px] bg-slate-200 relative ml-2">
                           <div
-                            className="h-full bg-[#0066FF] transition-all duration-300"
+                            className="h-full bg-[#0066FF] transition-all duration-200 ease-out"
                             style={{
                               width:
                                 scrollProgress >= (index + 1) / (steps.length - 1)
                                   ? "100%"
                                   : scrollProgress > index / (steps.length - 1)
-                                    ? `${((scrollProgress - index / (steps.length - 1)) /
-                                      (1 / (steps.length - 1))) *
-                                    100
+                                  ? `${
+                                      ((scrollProgress - index / (steps.length - 1)) /
+                                        (1 / (steps.length - 1))) *
+                                      100
                                     }%`
-                                    : "0%",
+                                  : "0%",
                             }}
                           />
                         </div>
@@ -458,14 +477,16 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
               </div>
             </a>
 
-            {/* Direct Web Onboarding Action */}
-            <button
-              onClick={onOpenGetStarted}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 hover:border-[#0066FF] hover:bg-blue-50/50 text-[#0B3B6F] font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation"
-            >
-              <span>{audience === "merchant" ? "Register Business Online" : "Open Account Online"}</span>
-              <ChevronRight className="w-4 h-4 text-[#0066FF]" />
-            </button>
+            {/* Direct Web Onboarding Action (Merchants Only) */}
+            {audience === "merchant" && (
+              <button
+                onClick={onOpenGetStarted}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 hover:border-[#0066FF] hover:bg-blue-50/50 text-[#0B3B6F] font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation"
+              >
+                <span>Register Business Online</span>
+                <ChevronRight className="w-4 h-4 text-[#0066FF]" />
+              </button>
+            )}
           </div>
         </div>
 
@@ -473,4 +494,3 @@ export function HorizontalStepsSection({ audience = "merchant", onOpenGetStarted
     </section>
   );
 }
-

@@ -1,27 +1,22 @@
 import React from "react";
 
-// TapperPay Custom Brand Logo Monogram
-export function TapperLogo({ className = "w-8 h-8", variant = "default" }: { className?: string; variant?: "default" | "white" | "dark" }) {
+// Official Tapper Brand Logo (Matching Attachment 2: Black squircle with 3 white radiating curved waves)
+export function TapperLogo({
+  className = "w-8 h-8",
+  variant = "default",
+}: {
+  className?: string;
+  variant?: "default" | "white" | "dark";
+}) {
+  const iconSrc = variant === "white" ? "/tapper-icon-white.png" : "/tapper-icon.png";
   return (
-    <div className={`relative flex items-center justify-center rounded-xl overflow-hidden shadow-sm transition-transform duration-200 hover:scale-105 ${className}`}>
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-        {/* Gradient Background */}
-        <rect width="48" height="48" rx="12" fill={variant === "white" ? "#FFFFFF" : "url(#tapper-gradient)"} />
-        {/* Geometric Stylized 'T' with tap wave energy */}
-        <path
-          d="M12 15C12 13.8954 12.8954 13 14 13H34C35.1046 13 36 13.8954 36 15C36 16.1046 35.1046 17 34 17H26.5V33C26.5 34.1046 25.6046 35 24.5 35H23.5C22.3954 35 21.5 34.1046 21.5 33V17H14C12.8954 17 12 16.1046 12 15Z"
-          fill={variant === "white" ? "#0B3B6F" : "#FFFFFF"}
-        />
-        {/* Orange Accent Tap Wave Dot */}
-        <circle cx="33" cy="27" r="3.5" fill="#FF6A2C" />
-        <defs>
-          <linearGradient id="tapper-gradient" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#0B3B6F" />
-            <stop offset="0.6" stopColor="#0066FF" />
-            <stop offset="1" stopColor="#FF6A2C" />
-          </linearGradient>
-        </defs>
-      </svg>
+    <div className={`relative inline-flex items-center justify-center rounded-xl overflow-hidden shadow-xs shrink-0 select-none ${className}`}>
+      <img
+        src={iconSrc}
+        alt="Tapper Logo"
+        className="w-full h-full object-contain"
+        draggable={false}
+      />
     </div>
   );
 }

@@ -68,54 +68,34 @@ export function FeaturesGridSection({ audience = "merchant" }: FeaturesGridSecti
 
   const customerFeatures = [
     {
-      title: "Tap to Pay on Phone",
-      description: "No physical card needed. Pay at supermarkets, restaurants, and fuel stations with your phone.",
+      title: "Contactless Tap on Phone",
+      description: "No physical card needed. Hold your phone near any contactless terminal or SoftPOS phone to pay in seconds.",
       icon: Nfc,
     },
     {
-      title: "Free Instant Transfers",
-      description: "Send money to any bank account in Nigeria in under 3 seconds with zero transfer charges.",
-      icon: Send,
-    },
-    {
-      title: "Virtual & Physical Cards",
-      description: "Generate instant virtual dollar and naira debit cards for Netflix, Spotify, and store taps.",
+      title: "Virtual & Physical Debit Cards",
+      description: "Generate instant virtual dollar and naira debit cards for Netflix, Spotify, shopping, and in-store taps.",
       icon: CreditCard,
     },
     {
-      title: "Automated Daily Savings",
-      description: "Lock away spare change or set daily automated savings with up to 14% annual interest.",
-      icon: PiggyBank,
-    },
-    {
       title: "Instant Push Notifications",
-      description: "Real-time alerts for every debit, credit, and tap transaction keeping your funds safe.",
+      description: "Real-time alerts for every debit, credit, and tap transaction keeping your funds monitored and safe.",
       icon: Bell,
     },
     {
-      title: "Biometric & Face Match",
-      description: "Protect your wallet with fingerprint login, face verification, and secret transaction PIN.",
+      title: "Biometric & Face Match Security",
+      description: "Protect your wallet with fingerprint login, face match verification, and encrypted transaction PIN.",
       icon: Lock,
-    },
-    {
-      title: "Bills & Airtime Top-Up",
-      description: "Recharge data, pay electricity bills, and renew TV subscriptions with 2% cashback.",
-      icon: Sparkles,
-    },
-    {
-      title: "24/7 Priority In-App Chat",
-      description: "Friendly customer support team ready to assist you anytime directly in the app.",
-      icon: Headphones,
     },
   ];
 
   const features = audience === "merchant" ? merchantFeatures : customerFeatures;
 
   return (
-    <section id="features" className="py-24 bg-white relative">
+    <section id="features" className="py-20 sm:py-24 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-14">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B3B6F] tracking-tight">
             {audience === "merchant"
               ? "Everything You Need to Power Your Business"
@@ -124,11 +104,11 @@ export function FeaturesGridSection({ audience = "merchant" }: FeaturesGridSecti
           <p className="mt-3 text-base text-slate-600 leading-relaxed font-normal">
             {audience === "merchant"
               ? "TapperPay gives you enterprise-grade payment tools right on your Android smartphone."
-              : "Discover a simpler, faster way to pay, transfer, save, and manage your money."}
+              : "Discover a simpler, faster way to tap, pay with virtual cards, and keep your wallet secure."}
           </p>
         </div>
 
-        {/* 8-Card Grid: 4 columns x 2 rows on large screens */}
+        {/* Card Grid: Symmetrical 4-Card layout for Consumer, 8-Card for Merchant */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, idx) => {
             const Icon = feature.icon;

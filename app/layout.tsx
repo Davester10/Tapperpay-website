@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth antialiased">
+    <html lang="en" className="scroll-smooth antialiased" data-scroll-behavior="smooth">
       <body className="min-h-screen bg-white text-slate-900 selection:bg-[#FF6A2C]/20 selection:text-[#0B3B6F] font-sans">
         {children}
       </body>

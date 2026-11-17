@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Zap, Shield, Smartphone, BarChart3, CreditCard, ArrowRight, Wallet, Sparkles } from "lucide-react";
+import { Zap, Shield, Smartphone, BarChart3, Store, Lock, BadgePercent, Headphones } from "lucide-react";
 
 interface ValuePropSectionProps {
   audience?: "merchant" | "customer";
@@ -45,36 +45,36 @@ export function ValuePropSection({ audience = "merchant" }: ValuePropSectionProp
 
   const customerValues = [
     {
-      title: "Tap to Pay Anywhere",
-      description: "Hold your Android phone near any contactless card terminal or merchant phone to pay in seconds.",
-      icon: Zap,
-      iconColor: "text-[#FF6A2C]",
-      iconBg: "bg-[#FFF0EB]",
-      borderHover: "hover:border-[#FF6A2C]/30",
-    },
-    {
-      title: "Free Peer-to-Peer Transfers",
-      description: "Send and receive money instantly from any Nigerian bank account with zero transaction deductions.",
-      icon: Wallet,
+      title: "Fuel Stations & Supermarkets",
+      description: "Pay at NNPC, Total, Shoprite, and local stores in 2 seconds flat with a phone tap—even when you left your wallet at home.",
+      icon: Store,
       iconColor: "text-[#0B3B6F]",
       iconBg: "bg-blue-50",
       borderHover: "hover:border-[#0B3B6F]/30",
     },
     {
-      title: "Virtual & Physical Cards",
-      description: "Generate instant virtual debit cards for global subscriptions, or request a physical NFC card.",
-      icon: CreditCard,
-      iconColor: "text-[#0066FF]",
-      iconBg: "bg-indigo-50",
-      borderHover: "hover:border-blue-300",
+      title: "Instant Card Freeze",
+      description: "Misplaced your phone or debit card? Freeze and unfreeze your account instantly in one tap with biometric face or fingerprint lock.",
+      icon: Lock,
+      iconColor: "text-[#FF6A2C]",
+      iconBg: "bg-[#FFF0EB]",
+      borderHover: "hover:border-[#FF6A2C]/30",
     },
     {
-      title: "High-Yield Savings",
-      description: "Put your money to work with automated daily interest savings plans earning up to 14% p.a.",
-      icon: Sparkles,
+      title: "Zero Hidden Fees",
+      description: "Transparent from day one. Zero account maintenance fees, zero card creation fees, and zero hidden transaction surcharges.",
+      icon: BadgePercent,
       iconColor: "text-emerald-600",
       iconBg: "bg-emerald-50",
       borderHover: "hover:border-emerald-300",
+    },
+    {
+      title: "NDIC Insured & CBN Protected",
+      description: "Your digital wallet and cards are regulated under strict CBN security standards with full NDIC deposit insurance.",
+      icon: Shield,
+      iconColor: "text-[#0066FF]",
+      iconBg: "bg-indigo-50",
+      borderHover: "hover:border-blue-300",
     },
   ];
 
@@ -86,12 +86,12 @@ export function ValuePropSection({ audience = "merchant" }: ValuePropSectionProp
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B3B6F] tracking-tight">
-            {audience === "merchant" ? "Why Merchants Choose TapperPay" : "Why Everyday Users Love TapperPay"}
+            {audience === "merchant" ? "Why Merchants Choose TapperPay" : "Built for Everyday Speed & Security"}
           </h2>
           <p className="mt-3 text-base text-slate-600 leading-relaxed font-normal">
             {audience === "merchant"
               ? "A smarter, faster, and more convenient way to accept payments. Built for modern businesses, designed for your growth."
-              : "Experience modern digital banking designed for speed, security, and everyday convenience."}
+              : "Designed for real life in Nigeria—from morning fuel runs and supermarket checkouts to midnight subscriptions."}
           </p>
         </div>
 

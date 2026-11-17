@@ -39,7 +39,12 @@ export function CompatibilityModal({ isOpen, onClose }: CompatibilityModalProps)
   });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/65 backdrop-blur-sm animate-in fade-in duration-200">
+    <div
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      className="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-4 bg-slate-950/65 backdrop-blur-sm animate-in fade-in duration-200"
+    >
       <div className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden max-h-[90vh] flex flex-col">
         {/* Modal Header */}
         <div className="bg-gradient-to-r from-[#0B3B6F] to-[#124b88] p-5 sm:p-6 text-white relative shrink-0">

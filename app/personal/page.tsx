@@ -8,8 +8,7 @@ import { ValuePropSection } from "../components/ValuePropSection";
 import { HorizontalStepsSection } from "../components/HorizontalStepsSection";
 import { TestimonialsSection } from "../components/TestimonialsSection";
 import { FaqSection } from "../components/FaqSection";
-import { CtaBannerSection } from "../components/CtaBannerSection";
-import { FooterSection } from "../components/FooterSection";
+import { PersonalFooterSection } from "../components/PersonalFooterSection";
 
 export default function PersonalPage() {
   return (
@@ -20,44 +19,37 @@ export default function PersonalPage() {
       />
 
       <main className="flex-1">
-        {/* 2. Personal Hero Section (Image 2 style: "Get the card that works.", App Store & Google Play, Floating Balance & Action Tiles) */}
+        {/* 2. Personal Hero Section (Brand colors, Phone on the right, Get the card that works, App Store & Google Play) */}
         <PersonalHeroSection />
 
         {/* 3. Features Grid for Personal Shoppers & Individuals */}
         <FeaturesGridSection audience="customer" />
 
-        {/* 4. Value Proposition ("Why Everyday Users Love TapperPay" - Learn more removed) */}
+        {/* 4. Value Proposition ("Why Everyday Users Love TapperPay") */}
         <ValuePropSection audience="customer" />
 
-        {/* 5. How It Works (Scroll down to advance tag removed) */}
+        {/* 5. How It Works */}
         <HorizontalStepsSection
           audience="customer"
           onOpenGetStarted={() => {
-            const el = document.getElementById("download");
+            const el = document.getElementById("home");
             if (el) el.scrollIntoView({ behavior: "smooth" });
           }}
         />
 
         {/* Note: PRICING SECTION COMPLETELY REMOVED FROM PERSONAL PAGE AS REQUESTED */}
 
-        {/* 6. Testimonials ("Trusted by Businesses & Shoppers") */}
-        <TestimonialsSection />
+        {/* 6. Consumer Testimonials */}
+        <TestimonialsSection audience="customer" />
 
-        {/* 7. FAQ Section ("View All FAQs" link removed) */}
-        <FaqSection />
+        {/* 7. Consumer-Focused FAQ Section */}
+        <FaqSection audience="customer" />
 
-        {/* 8. Bottom CTA Banner (Personal App Download) */}
-        <CtaBannerSection
-          audience="customer"
-          onOpenGetStarted={() => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-        />
+        {/* Note: "Ready to experience cashless instant payment entirely" CTA section removed as requested */}
       </main>
 
-      {/* 9. Footer (Orange background with blue hover links) */}
-      <FooterSection />
+      {/* 8. Dedicated Redesigned Footer for Personal Tab */}
+      <PersonalFooterSection />
     </div>
   );
 }
-

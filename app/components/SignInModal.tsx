@@ -55,40 +55,62 @@ export function SignInModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#031B39]/90 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
-      {/* Privacy link in top right (Matching Image 1) */}
-      <div className="fixed top-5 right-6 z-10 hidden sm:flex items-center gap-1 text-xs font-semibold text-white/80 hover:text-white transition-colors cursor-pointer">
+    <div
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto"
+    >
+      {/* Privacy link in top left/right on system view */}
+      <div className="fixed top-5 left-6 z-[210] hidden sm:flex items-center gap-1 text-xs font-semibold text-white/80 hover:text-white transition-colors cursor-pointer">
         <a href="#privacy" target="_blank" rel="noreferrer" className="flex items-center gap-1">
           <span>Read our Privacy Statement</span>
           <ArrowUpRight className="w-3.5 h-3.5" />
         </a>
       </div>
 
+      {/* Floating Screen Close Button (Visible on both system & mobile) */}
+      <button
+        type="button"
+        onClick={onClose}
+        className="fixed top-4 right-4 sm:top-5 sm:right-6 z-[210] p-2.5 rounded-full bg-white/20 hover:bg-white/30 active:scale-95 text-white transition-all cursor-pointer shadow-lg backdrop-blur-sm flex items-center justify-center min-w-[40px] min-h-[40px]"
+        aria-label="Close modal"
+      >
+        <X className="w-5 h-5 stroke-[2.5]" />
+      </button>
+
       {/* Main Container */}
       <div className="relative w-full max-w-md my-auto flex flex-col items-center">
         
-        {/* Floating Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute -top-12 right-0 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-          aria-label="Close"
-        >
-          <X className="w-5 h-5" />
-        </button>
-
         {/* Central White Card (Matching Image 1) */}
-        <div className="w-full bg-white rounded-3xl shadow-2xl p-7 sm:p-9 text-center border border-slate-100">
+        <div className="relative w-full bg-white rounded-3xl shadow-2xl p-7 sm:p-9 text-center border border-slate-100">
           
-          {/* Logo Monogram Badge */}
+          {/* In-Card Close Button (Prominently visible inside the card on all screen sizes) */}
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-4 sm:top-5 right-4 sm:right-5 p-2 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-500 hover:text-slate-900 transition-all cursor-pointer z-30 shadow-xs flex items-center justify-center min-w-[36px] min-h-[36px]"
+            aria-label="Close"
+          >
+            <X className="w-5 h-5 stroke-[2.5]" />
+          </button>
+
+          {/* Logo Monogram Badge (Official Tapper Logo) */}
           <div className="flex justify-center mb-5">
-            <div className="w-14 h-14 rounded-2xl bg-[#0066FF] flex items-center justify-center shadow-lg shadow-blue-500/25">
-              <TapperLogo className="w-10 h-10" variant="white" />
-            </div>
+            <TapperLogo className="w-14 h-14 shadow-lg shadow-black/15" />
           </div>
 
           {/* Heading */}
           <h2 className="text-2xl font-black text-slate-900 tracking-tight">
-            {customTitle || (mode === "signin" ? "Log In to TapperPay" : "Create TapperPay Account")}
+            {customTitle || (mode === "signin" ? (
+              <>
+                Log In to <span className="text-[#0B3B6F]">Tapper</span><span className="text-[#FF6A2C]">Pay</span>
+              </>
+            ) : (
+              <>
+                Create <span className="text-[#0B3B6F]">Tapper</span><span className="text-[#FF6A2C]">Pay</span> Account
+              </>
+            ))}
           </h2>
           {customDescription && (
             <p className="mt-2 text-xs sm:text-sm text-slate-500 leading-relaxed max-w-xs mx-auto">
@@ -204,7 +226,7 @@ export function SignInModal({
                 {/* Primary Action Button */}
                 <button
                   type="submit"
-                  className="w-full py-3.5 mt-2 rounded-xl bg-[#0066FF] hover:bg-[#0050CC] active:scale-98 text-white font-bold text-sm sm:text-base transition-all shadow-md shadow-blue-500/25 cursor-pointer"
+                  className="w-full py-3.5 mt-2 rounded-xl bg-[#FF6A2C] hover:bg-[#E5581E] active:scale-98 text-white font-bold text-sm sm:text-base transition-all shadow-md shadow-orange-500/20 cursor-pointer"
                 >
                   {mode === "signin" ? "Next" : "Create Free Account"}
                 </button>
@@ -260,9 +282,9 @@ export function SignInModal({
           </button>
         </div>
 
-        {/* Legal Regulatory Subtext (Matching Image 1) */}
+        {/* Legal Regulatory Subtext */}
         <p className="mt-6 text-[11px] text-white/70 text-center font-medium max-w-sm">
-          Licensed by the <span className="font-bold text-white">Central Bank of Nigeria</span> and Insured by the <span className="font-bold text-white">NDIC</span>.
+          Banking services provided in partnership with CBN-licensed and NDIC-insured financial institutions.
         </p>
 
       </div>

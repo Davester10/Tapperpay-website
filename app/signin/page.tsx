@@ -17,13 +17,13 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#031B39] flex flex-col justify-between p-4 sm:p-8 relative overflow-x-hidden font-sans">
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-between p-4 sm:p-8 relative overflow-x-hidden font-sans">
       
       {/* Top Bar with Home Link and Privacy Link */}
       <div className="w-full max-w-6xl mx-auto flex items-center justify-between z-10">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-white/80 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to TapperPay</span>
@@ -31,7 +31,7 @@ export default function SignInPage() {
 
         <a
           href="#privacy"
-          className="flex items-center gap-1 text-xs font-semibold text-white/80 hover:text-white transition-colors"
+          className="flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
         >
           <span>Read our Privacy Statement</span>
           <ArrowUpRight className="w-3.5 h-3.5" />
@@ -42,18 +42,26 @@ export default function SignInPage() {
       <div className="w-full max-w-md mx-auto my-auto py-8 flex flex-col items-center z-10">
         
         {/* Central White Card */}
-        <div className="w-full bg-white rounded-3xl shadow-2xl p-7 sm:p-9 text-center border border-slate-100">
+        <div className="relative w-full bg-white rounded-3xl shadow-2xl p-7 sm:p-9 text-center border border-slate-100">
           
-          {/* Logo Monogram Badge */}
+          {/* Close / Return to Home Button */}
+          <Link
+            href="/"
+            className="absolute top-4 sm:top-5 right-4 sm:right-5 p-2 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-500 hover:text-slate-900 transition-all cursor-pointer z-30 shadow-xs flex items-center justify-center min-w-[36px] min-h-[36px]"
+            aria-label="Close and return to home"
+          >
+            <ArrowLeft className="w-5 h-5 sm:hidden" />
+            <span className="hidden sm:inline-block text-xs font-bold px-1 text-slate-600">Close</span>
+          </Link>
+
+          {/* Logo Monogram Badge (Official Tapper Logo) */}
           <div className="flex justify-center mb-5">
-            <div className="w-14 h-14 rounded-2xl bg-[#0066FF] flex items-center justify-center shadow-lg shadow-blue-500/25">
-              <TapperLogo className="w-10 h-10" variant="white" />
-            </div>
+            <TapperLogo className="w-14 h-14 shadow-lg shadow-black/15" />
           </div>
 
           {/* Heading */}
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            Log In to TapperPay
+            Log In to <span className="text-[#0B3B6F]">Tapper</span><span className="text-[#FF6A2C]">Pay</span>
           </h1>
 
           {isSuccess ? (
@@ -137,7 +145,7 @@ export default function SignInPage() {
                 {/* Primary Action Button */}
                 <button
                   type="submit"
-                  className="w-full py-3.5 mt-2 rounded-xl bg-[#0066FF] hover:bg-[#0050CC] active:scale-98 text-white font-bold text-sm sm:text-base transition-all shadow-md shadow-blue-500/25 cursor-pointer"
+                  className="w-full py-3.5 mt-2 rounded-xl bg-[#FF6A2C] hover:bg-[#E5581E] active:scale-98 text-white font-bold text-sm sm:text-base transition-all shadow-md shadow-orange-500/20 cursor-pointer"
                 >
                   Next
                 </button>
@@ -184,8 +192,8 @@ export default function SignInPage() {
         </div>
 
         {/* Regulatory Subtext */}
-        <p className="mt-6 text-[11px] text-white/70 text-center font-medium max-w-sm">
-          Licensed by the <span className="font-bold text-white">Central Bank of Nigeria</span> and Insured by the <span className="font-bold text-white">NDIC</span>.
+        <p className="mt-6 text-[11px] text-slate-500 text-center font-medium max-w-sm">
+          Banking services provided in partnership with CBN-licensed and NDIC-insured financial institutions.
         </p>
 
       </div>

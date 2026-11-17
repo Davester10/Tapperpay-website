@@ -51,17 +51,17 @@ export default function BusinessPage() {
           onOpenGetStarted={handleOpenSignIn}
         />
 
-        {/* 6. Pricing Overview (Interactive Cards & Savings Calculator) */}
-        <PricingSection
+        {/* 6. Pricing Overview - Commented out for now as requested until ready */}
+        {/* <PricingSection
           audience="merchant"
           onOpenGetStarted={handleOpenSignIn}
-        />
+        /> */}
 
         {/* 7. Testimonials */}
-        <TestimonialsSection />
+        <TestimonialsSection audience="merchant" />
 
         {/* 8. FAQ Section */}
-        <FaqSection />
+        <FaqSection audience="merchant" />
 
         {/* 9. Bottom Pre-Footer CTA Banner */}
         <CtaBannerSection
