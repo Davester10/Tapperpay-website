@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TapperPay Website
 
-## Getting Started
+The marketing website for TapperPay, live at **https://tapperpay.org**. Built with Next.js 16.4.6 and Tailwind CSS.
 
-First, run the development server:
+This guide covers how to get the latest code, the routine to follow every time you work, and how to fix common git errors.
+
+## Get the latest code
+
+Open Terminal and run these in order. Each step says what you should see.
+
+1. Go to the project folder (change the path to wherever you cloned it).
+
+   ```bash
+   cd ~/path/to/Tapperpay-website
+   ```
+
+2. One-time setup: tell git to combine changes by merging. This stops the "divergent branches" error later.
+
+   ```bash
+   git config pull.rebase false
+   ```
+
+3. Check for unsaved work.
+
+   ```bash
+   git status
+   ```
+
+   - It says `nothing to commit, working tree clean` → skip to step 5.
+   - It lists files → do step 4 first.
+
+4. Only if step 3 listed files: put your unfinished work aside safely.
+
+   ```bash
+   git stash -u
+   ```
+
+5. Switch to the main branch.
+
+   ```bash
+   git checkout main
+   ```
+
+6. Download the latest code. `--no-edit` stops git from opening a confusing text editor.
+
+   ```bash
+   git pull --no-edit origin main
+   ```
+
+7. Install the packages. Always do this after pulling.
+
+   ```bash
+   npm ci
+   ```
+
+   - `npm ci` is the install step. Use it instead of `npm install`: it installs the exact versions in `package-lock.json` and never changes that file.
+   - It should end with `found 0 vulnerabilities`.
+
+8. Check the Next.js version.
+
+   ```bash
+   npx next --version
+   ```
+
+   - It must print `Next.js v16.4.6`.
+
+9. Only if you did step 4: bring your unfinished work back.
+
+   ```bash
+   git stash pop
+   ```
+
+10. Start the site and open http://localhost:3000 in your browser.
+
+    ```bash
+    npm run dev
+    ```
+
+## Every time you work
+
+Pull before you start and again before you push. Most git problems come from skipping one of these.
+
+**Before you start coding:**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git checkout main
+git pull --no-edit origin main
+npm ci
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Always run `npm ci` after pulling, so your packages match what everyone else uses.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**When you finish and want to share your work:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+git status
+git add .
+git commit -m "Short description of what you changed"
+git pull --no-edit origin main
+git push origin main
+```
 
-## Learn More
+- `npm run build` must finish without errors before you push. If it fails, fix that first.
+- `git status` shows what will be saved. Secret files (`.env`), `node_modules` and build folders are already ignored, so they won't be added.
+- Pushing to GitHub does not update the live site at tapperpay.org. The project owner deploys it to Vercel.
 
-To learn more about Next.js, take a look at the following resources:
+## If something goes wrong
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Find the message git showed you, then run the fix. If it still fails, stop and ask before trying anything else.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Git says | What it means | Fix |
+| --- | --- | --- |
+| `Your local changes ... would be overwritten by merge` | You have unsaved changes the pull would overwrite | `git stash -u`, then pull again, then `git stash pop` |
+| `! [rejected] main -> main (fetch first)` | Someone pushed since your last pull | `git pull --no-edit origin main`, then `git push origin main` |
+| `Need to specify how to reconcile divergent branches` | The one-time setup (step 2) was skipped | `git config pull.rebase false`, then pull again |
+| `CONFLICT (content): Merge conflict in ...` | You and someone else changed the same lines | `git merge --abort` puts everything back as before the pull. Then ask for help |
+| A screen full of text opens and you can't type | Git opened the Vim editor for a message | Type `:wq` and press Enter |
+| `npx next --version` doesn't show 16.4.6 | Old packages are still installed | Run `npm ci` again |
 
-## Deploy on Vercel
+**Never run these unless a teammate tells you to.** They can permanently delete work, yours or other people's:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `git push --force`
+- `git reset --hard`
+- `git clean -fd`
+- `git checkout .`
