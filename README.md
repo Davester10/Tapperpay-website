@@ -47,14 +47,13 @@ Open Terminal and run these in order. Each step says what you should see.
    git pull --no-edit origin main
    ```
 
-   - If `package.json` or `package-lock.json` is in the list of changed files, the packages changed, so step 7 matters.
-
-7. Install the packages. This uses the exact versions in `package-lock.json`.
+7. Install the packages. Always do this after pulling.
 
    ```bash
    npm ci
    ```
 
+   - `npm ci` is the install step. Use it instead of `npm install`: it installs the exact versions in `package-lock.json` and never changes that file.
    - It should end with `found 0 vulnerabilities`.
 
 8. Check the Next.js version.
@@ -86,9 +85,10 @@ Pull before you start and again before you push. Most git problems come from ski
 ```bash
 git checkout main
 git pull --no-edit origin main
+npm ci
 ```
 
-If the pull lists `package.json` or `package-lock.json`, also run `npm ci`.
+Always run `npm ci` after pulling, so your packages match what everyone else uses.
 
 **When you finish and want to share your work:**
 
