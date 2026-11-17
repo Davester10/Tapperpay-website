@@ -186,11 +186,11 @@ export function PersonalFooterSection() {
                 <span>0700-TAPPER-PAY</span>
               </a>
               <a
-                href="mailto:support@tapperpay.com"
+                href="mailto:support@techlabx.org"
                 className="flex items-center gap-1.5 text-[#FF6A2C] hover:text-[#0B3B6F] transition-colors"
               >
                 <Mail className="w-3.5 h-3.5 shrink-0" />
-                <span className="underline underline-offset-2">support@tapperpay.com</span>
+                <span className="underline underline-offset-2">support@techlabx.org</span>
               </a>
             </div>
           </div>
@@ -200,7 +200,7 @@ export function PersonalFooterSection() {
         {/* Bottom Row: Socials & Copyright */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500">
           <div>
-            <p>© 2026 TapperPay Technologies Limited. All rights reserved.</p>
+            <p>© 2026 Tapper Pay, a product of Tech Lab X Ltd. All rights reserved.</p>
             <p className="text-[11px] text-slate-400 mt-1">
               Banking services provided in partnership with CBN-licensed and NDIC-insured financial institutions.
             </p>

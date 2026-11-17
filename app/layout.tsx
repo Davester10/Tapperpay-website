@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     description:
       "TapperPay is your all-in-one contactless payment solution. Turn your smartphone into a secure payment terminal.",
     type: "website",
-    url: "https://tapperpay.com",
+    url: "https://tapperpay.org",
   },
 };
 

@@ -43,14 +43,14 @@ export function FooterSection() {
 
               <div>
                 <a
-                  href="mailto:support@tapperpay.com"
+                  href="mailto:support@techlabx.org"
                   className="inline-flex items-center gap-2 text-[#FF6A2C] hover:text-[#0B3B6F] transition-colors group cursor-pointer"
-                  title="Send message to support@tapperpay.com"
+                  title="Send message to support@techlabx.org"
                 >
                   <span className="p-1.5 rounded-lg bg-orange-50 group-hover:bg-blue-50 text-[#FF6A2C] group-hover:text-[#0B3B6F] transition-colors border border-orange-100">
                     <Mail className="w-3.5 h-3.5" />
                   </span>
-                  <span className="underline underline-offset-2">support@tapperpay.com</span>
+                  <span className="underline underline-offset-2">support@techlabx.org</span>
                 </a>
               </div>
             </div>
@@ -133,7 +133,7 @@ export function FooterSection() {
 
         {/* Bottom Row */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500">
-          <p>© 2026 TapperPay Technologies Limited. All rights reserved.</p>
+          <p>© 2026 Tapper Pay, a product of Tech Lab X Ltd. All rights reserved.</p>
           <p className="text-center sm:text-right text-slate-500 text-[11px] sm:text-xs">
             Banking services provided in partnership with CBN-licensed and NDIC-insured financial institutions.
           </p>

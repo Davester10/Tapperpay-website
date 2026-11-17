@@ -522,10 +522,10 @@ export function Navbar({
                 </a>
 
                 <a
-                  href="mailto:support@tapperpay.com"
+                  href="mailto:support@techlabx.org"
                   className="flex items-center gap-1.5 hover:text-[#0B3B6F] transition-colors"
                 >
-                  <span>support@tapperpay.com</span>
+                  <span>support@techlabx.org</span>
                 </a>
               </div>
             </div>
